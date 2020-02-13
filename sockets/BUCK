@@ -1,0 +1,31 @@
+cxx_binary(
+  name = 'unix_server_socket',
+  srcs = [
+    'unix_server_socket.c',
+  ],
+  deps = [
+    ":unix_socket",
+    "//lib:error_functions",
+  ]
+)
+
+cxx_binary(
+  name = 'unix_client_socket',
+  srcs = [
+    'unix_client_socket.c',
+  ],
+  deps = [
+    ":unix_socket",
+    "//lib:error_functions",
+  ]
+)
+
+cxx_library(
+  name = 'unix_socket',
+  exported_headers = [
+    'unix_socket.h',
+  ],
+  visibility = [
+    'PUBLIC',
+  ],
+)

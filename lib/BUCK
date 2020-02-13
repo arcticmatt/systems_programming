@@ -1,0 +1,12 @@
+cxx_library(
+  name = 'error_functions',
+  srcs = [
+    'error_functions.c',
+  ],
+  exported_headers = [
+    'error_functions.h',
+  ],
+  visibility = [
+    'PUBLIC',
+  ],
+)
