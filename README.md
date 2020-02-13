@@ -3,6 +3,8 @@ This repository contains some code I've written to help me better understand sys
 
 ## Running the Code
 
+NOTE: I've only tested this on Mac!
+
 This project uses [Buck](https://buck.build/setup/getting_started.html) to build the code. To install Buck, follow the instructions listed [here](https://buck.build/setup/getting_started.html). TBH though, their instructions aren't the best, so here's what I did:
 
 ```
