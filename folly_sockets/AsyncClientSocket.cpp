@@ -1,11 +1,14 @@
+///
+/// Runs a client AsyncSocket that connects to an AsyncServerSocket.
+/// The AsyncSocket will write data obtained from the user via STDIN.
+///
+
+#include "AsyncSocket.h"
+
 #include <iostream>
 #include <string>
 
 #include <folly/io/async/AsyncSocket.h>
-
-std::string kDebugPrefix = "[DEBUG] ";
-constexpr auto kServerAddr = "::1";
-constexpr auto kServerPort = 52280;
 
 class ConnectCallback final : public folly::AsyncSocket::ConnectCallback {
 public:
@@ -40,18 +43,22 @@ public:
 
 int main() {
   folly::EventBase evb;
-  folly::SocketAddress serverSocketAddr(kServerAddr, kServerPort);
 
-  folly::SocketAddress clientSocketAddr;
+  // Create the client socket.
   auto clientSocket = folly::AsyncSocket::newSocket(&evb);
 
+  // Connect the socket.
   ConnectCallback connectCallback;
+  folly::SocketAddress serverSocketAddr(kServerAddr, kServerPort);
   clientSocket->connect(&connectCallback, serverSocketAddr, 1000);
+
+  // Print the socket's local address for debugging.
+  folly::SocketAddress clientSocketAddr;
   clientSocket->getLocalAddress(&clientSocketAddr);
   std::cout << "Client socket is at address = " << clientSocketAddr.describe()
             << std::endl;
 
-  // Connect synchronously.
+  // Connect synchronously! loops until we process the connect callback.
   evb.loop();
   if (connectCallback.state != ConnectCallback::State::SUCCESS) {
     std::cerr << "ERROR! Failed to connect: " << connectCallback.error
@@ -63,6 +70,7 @@ int main() {
   auto thread = std::thread([&] { evb.loopForever(); });
   evb.waitUntilRunning();
 
+  // Read from STDIN and write to the socket.
   WriteCallback writeCallback;
   std::cout << "Waiting for user input..." << std::endl;
   for (std::string line; std::getline(std::cin, line);) {
@@ -70,6 +78,7 @@ int main() {
     clientSocket->write(&writeCallback, data, line.size());
   }
 
+  // Block the main thread.
   while (1) {
   }
 }

@@ -1,7 +1,10 @@
 cxx_binary(
-  name = 'async_client_socket',
+  name = "async_client_socket",
   srcs = [
-    'AsyncClientSocket.cpp',
+    "AsyncClientSocket.cpp",
+  ],
+  headers = [
+    "AsyncSocket.h",
   ],
   deps = [
     "//:boost",
@@ -15,9 +18,12 @@ cxx_binary(
 )
 
 cxx_binary(
-  name = 'async_server_socket',
+  name = "async_server_socket",
   srcs = [
-    'AsyncServerSocket.cpp',
+    "AsyncServerSocket.cpp",
+  ],
+  headers = [
+    "AsyncSocket.h",
   ],
   deps = [
     "//:boost",

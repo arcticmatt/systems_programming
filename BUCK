@@ -38,6 +38,7 @@ prebuilt_cxx_library(
   header_dirs = [
     "gflags/2.2.2/include/",
   ],
+  # TODO: Not sure why this works. I.e. why static_lib can be used with dylib.
   static_lib = "gflags/2.2.2/lib/libgflags.2.2.2.dylib",
   visibility = [
     'PUBLIC',
@@ -49,6 +50,7 @@ prebuilt_cxx_library(
   header_dirs = [
     "glog/0.4.0/include/",
   ],
+  # TODO: Not sure why this works. I.e. why static_lib can be used with dylib.
   static_lib = "glog/0.4.0/lib/libglog.0.4.0.dylib",
   visibility = [
     'PUBLIC',
