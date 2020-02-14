@@ -1,0 +1,31 @@
+cxx_binary(
+  name = 'async_client_socket',
+  srcs = [
+    'AsyncClientSocket.cpp',
+  ],
+  deps = [
+    "//:boost",
+    "//:double_conversion",
+    "//:folly",
+    "//:gflags",
+    "//:glog",
+    "//:libevent_core",
+    "//:openssl",
+  ],
+)
+
+cxx_binary(
+  name = 'async_server_socket',
+  srcs = [
+    'AsyncServerSocket.cpp',
+  ],
+  deps = [
+    "//:boost",
+    "//:double_conversion",
+    "//:folly",
+    "//:gflags",
+    "//:glog",
+    "//:libevent_core",
+    "//:openssl",
+  ],
+)
