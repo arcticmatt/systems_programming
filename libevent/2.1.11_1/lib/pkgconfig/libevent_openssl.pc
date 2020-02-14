@@ -1,0 +1,16 @@
+#libevent pkg-config source file
+
+prefix=/Users/mlim/.brew/Cellar/libevent/2.1.11_1
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libevent_openssl
+Description: libevent_openssl adds openssl-based TLS support to libevent
+Version: 2.1.11-stable
+Requires: libevent
+Conflicts:
+Libs: -L${libdir} -levent_openssl
+Libs.private:  -L/Users/mlim/.brew/Cellar/openssl@1.1/1.1.1d/lib -lssl -lcrypto   
+Cflags: -I${includedir} -I/Users/mlim/.brew/Cellar/openssl@1.1/1.1.1d/include
+

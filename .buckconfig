@@ -1,0 +1,2 @@
+[cxx]
+  cxxppflags="--std=c++17"

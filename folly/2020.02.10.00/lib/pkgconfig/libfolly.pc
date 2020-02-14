@@ -1,0 +1,11 @@
+prefix=/Users/mlim/.brew/Cellar/folly/2020.02.10.00
+exec_prefix=/Users/mlim/.brew/Cellar/folly/2020.02.10.00
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libfolly
+Description: Facebook (Folly) C++ library
+Version: master
+Cflags: -I${includedir}  -std=gnu++1z -Werror=unknown-warning-option -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DGFLAGS_IS_A_DLL=0 -DFMT_LOCALE -I/Users/mlim/.brew/include -I/Users/mlim/.brew/opt/openssl@1.1/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include
+Libs: -L${libdir} -lfolly
+Libs.private: /Users/mlim/.brew/lib/libdouble-conversion.a /Users/mlim/.brew/lib/libglog.dylib /Users/mlim/.brew/lib/libevent.dylib /Users/mlim/.brew/opt/openssl@1.1/lib/libssl.dylib /Users/mlim/.brew/opt/openssl@1.1/lib/libcrypto.dylib /usr/lib/libz.dylib /usr/lib/libbz2.dylib /Users/mlim/.brew/lib/liblz4.dylib /Users/mlim/.brew/lib/libzstd.dylib /Users/mlim/.brew/lib/libsnappy.dylib

@@ -1,2 +1,4 @@
+.lsp-buck-out
+.lsp.buckd
 buck-out
 .buckd
