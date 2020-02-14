@@ -2,13 +2,13 @@
 
 This is what I did to a) get Folly installed my computer b) get it up and running with Buck. I used [https://github.com/facebook/folly](https://github.com/facebook/folly) as a reference.
 
-**Step 1: Install Folly**
+## Step 1: Install Folly
 
 `brew install folly`
 
 Then, run `brew info folly` to see where `folly` is installed. For me, it was installed at `/Users/mlim/.brew/Cellar/folly/2020.02.10.00`.
 
-**Step 2: Use Folly in a Test Program**
+## Step 2: Use Folly in a Test Program
 
 Mimicking [http://www.martinbroadhurst.com/setting-up-facebook-folly-on-ubuntu.html](http://www.martinbroadhurst.com/setting-up-facebook-folly-on-ubuntu.html), let's create a simple test program to try `folly` out. 
 
@@ -27,7 +27,7 @@ We can compile it like this:
 
     clang++ hello.cpp -o hello -I/Users/mlim/.brew/Cellar/folly/2020.02.10.00/include/ -I/Users/mlim/.brew/Cellar/boost/1.72.0/include/ -L/Users/mlim/.brew/Cellar/folly/2020.02.10.00/lib -lfolly --std=c++17
 
-**Step 3: Use Folly With Buck**
+## Step 3: Use Folly With Buck
 
 Now, let's copy in the `folly` and `boost` folders so we can use them with Buck (Buck doesn't allow absolute pathnames, so if we didn't do this, we would get errors if we used a path like `/Users/mlim/.brew/Cellar/folly/2020.02.10.00/include` with Buck). 
 
