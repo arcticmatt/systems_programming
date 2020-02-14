@@ -67,7 +67,7 @@ Our top-level `BUCK` file will look like this.
       ],
     )
 
-Our `.buckconfig` file will look like this, since `[folly` requires at least C++14](https://github.com/facebook/folly/blob/master/folly/Portability.h). Might as well use the newest one since this is a spiffy new project. 
+Our `.buckconfig` file will look like this, since [`folly` requires at least C++14](https://github.com/facebook/folly/blob/master/folly/Portability.h). Might as well use the newest one since this is a spiffy new project. 
 
     [cxx]
       cxxppflags="--std=c++17"
