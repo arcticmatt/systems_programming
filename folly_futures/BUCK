@@ -1,0 +1,47 @@
+cxx_binary(
+  name = 'defer_vs_then',
+  srcs = [
+    'DeferVsThen.cpp',
+  ],
+  headers = [
+    "ThreadUtils.h",
+  ],
+  deps = [
+    "//:boost",
+    "//:double_conversion",
+    "//:folly",
+    "//:gflags",
+    "//:glog",
+  ],
+)
+
+cxx_binary(
+  name = 'experiment',
+  srcs = [
+    'Experiment.cpp',
+  ],
+  deps = [
+    "//:boost",
+    "//:double_conversion",
+    "//:folly",
+    "//:gflags",
+    "//:glog",
+  ],
+)
+
+cxx_binary(
+  name = 'timeouts',
+  srcs = [
+    'Timeouts.cpp',
+  ],
+  headers = [
+    "ThreadUtils.h",
+  ],
+  deps = [
+    "//:boost",
+    "//:double_conversion",
+    "//:folly",
+    "//:gflags",
+    "//:glog",
+  ],
+)
