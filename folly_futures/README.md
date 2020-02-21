@@ -10,14 +10,16 @@ Here's my really shortened explanation.
 - A *promise* is the other end of a future. Once a promise is fulfilled, the corresponding future will contain a value. For example, let's say we have `auto p = Promise<int>()` and `auto f = Future<int>()`. Once we do `p.setValue(5)`, then `f.value() == 5`.
 - Here's an analogy. Bill promises Sam $5. However, Bill doesn't have $5. Bill does have $4 in his bank account though, and eventually via increase he will have $5. Instead of waiting around for that sweet interest to come rolling in, Bill instead gives Sam a magic thing called a "cashfuture." It's a block of wood that will magically turn into a five dollar bill when Bill has $5. Thus, Sam can just take the "cashfuture" and continue on with his day.
 
-    // Takes 5 minutes...
-    Output fooSync(Input);
+```
+// Takes 5 minutes...
+Output fooSync(Input);
     
-    // Returns immediately!
-    Future<Output> fooAsync(Input);
+// Returns immediately!
+Future<Output> fooAsync(Input);
     
-    // Could also do this, but callbacks are annoying.
-    void fooAsyncCallback(Input, Callback<Output>);
+// Could also do this, but callbacks are annoying.
+void fooAsyncCallback(Input, Callback<Output>);
+```
 
 # Defer vs. Then
 

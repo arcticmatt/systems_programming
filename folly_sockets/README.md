@@ -6,11 +6,11 @@ This directory contains code related to Folly Async Sockets. For example, in the
 
 Here is a (very) high-level summary of the components used in these demos, obtained from the Folly headers.
 
-- `[AsyncSocket](https://github.com/facebook/folly/blob/master/folly/io/async/AsyncSocket.h)` - allows users to asynchronously wait for data on a socket, and to asynchronously send data.
-- `[AsyncServerSocket](https://github.com/facebook/folly/blob/master/folly/io/async/AsyncServerSocket.h)` - a listening socket that asynchronously informs a callback whenever a new connection has been accepted.
-- `[AsyncReader::ReadCallback](https://github.com/facebook/folly/blob/master/folly/io/async/AsyncTransport.h)` - invoked by `AsyncSocket` when data is available.
-- `[AsyncWriter::WriteCallback](https://github.com/facebook/folly/blob/master/folly/io/async/AsyncTransport.h)` - invoked by `AsyncSocket` when writes succeed/error.
-- `[EventBase](https://github.com/facebook/folly/blob/master/folly/io/async/EventBase.h)` - provides a main loop that notifies `EventHandler` callback objects when I/O is ready on a file descriptor, and notifies `AsyncTimeout` objects when a specified timeout has expired. More complex, higher-level callback mechanisms can then be built on top of `EventHandler` and `AsyncTimeout`.
+- [`AsyncSocket`](https://github.com/facebook/folly/blob/master/folly/io/async/AsyncSocket.h) - allows users to asynchronously wait for data on a socket, and to asynchronously send data.
+- [`AsyncServerSocket`](https://github.com/facebook/folly/blob/master/folly/io/async/AsyncServerSocket.h) - a listening socket that asynchronously informs a callback whenever a new connection has been accepted.
+- [`AsyncReader::ReadCallback`](https://github.com/facebook/folly/blob/master/folly/io/async/AsyncTransport.h) - invoked by `AsyncSocket` when data is available.
+- [`AsyncWriter::WriteCallback`](https://github.com/facebook/folly/blob/master/folly/io/async/AsyncTransport.h) - invoked by `AsyncSocket` when writes succeed/error.
+- [`EventBase`](https://github.com/facebook/folly/blob/master/folly/io/async/EventBase.h) - provides a main loop that notifies `EventHandler` callback objects when I/O is ready on a file descriptor, and notifies `AsyncTimeout` objects when a specified timeout has expired. More complex, higher-level callback mechanisms can then be built on top of `EventHandler` and `AsyncTimeout`.
 
 # STDIN / STDOUT Demo
 
@@ -52,7 +52,7 @@ Here's a more in-depth explanation of how this demo works.
 ## On the Client Side
 
 1. The client `AsyncSocket` (I'll refer to this socket as "the client" from now on) is constructed with an `EventBase` using `AsyncSocket::newSocket`. The `EventBase` runs the callbacks associated with the `AsyncSocket` in its thread.
-2. The client connects to the `AsyncServerSocket` using `[AsyncSocket::connect](https://our.internmc.facebook.com/intern/codex/symbol/fbcode:folly/AsyncSocket/connect;ConnectCallback*,const_std::string&,uint16/)`.
+2. The client connects to the `AsyncServerSocket` using [`AsyncSocket::connect`](https://our.internmc.facebook.com/intern/codex/symbol/fbcode:folly/AsyncSocket/connect;ConnectCallback*,const_std::string&,uint16/).
 3. The client writes to the socket using `AsyncSocket::write`. A callback is passed to `AsyncSocket::write` - on success, that callback's `writeSuccess` function is called on the `EventBase`'s thread. 
 
 ## On the Server Side
