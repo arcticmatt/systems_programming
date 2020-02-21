@@ -73,9 +73,8 @@ void testGlobalPromise() {
   const std::string label = "testGlobalPromise";
   printf("%sStart\n", tidLabelStr(std::this_thread::get_id(), label).c_str());
 
-  folly::ThreadedExecutor exec;
   try {
-    std::move(kGlobalSf).via(&exec).get(1s);
+    std::move(kGlobalSf).within(1s).get();
     printf("%sAfter calling kGlobalSf.via()\n",
            tidLabelStr(std::this_thread::get_id(), label).c_str());
   } catch (folly::FutureTimeout &ex) {
@@ -86,6 +85,11 @@ void testGlobalPromise() {
 
 int main(int argc, char *argv[]) {
   const std::string label = "main";
+  // NOT CALLED
+  // - get(timeout)
+  // YES CALLED
+  // - within(timeout).get()
+  // - via(&exec).wait(timeout) + cancel()
   kGlobalPromise.setInterruptHandler([&kGlobalPromise = kGlobalPromise, label](
                                          const folly::exception_wrapper &e) {
     printf("%sIn kGlobalPromise's interrupt handler!\n",
@@ -98,6 +102,7 @@ int main(int argc, char *argv[]) {
     kGlobalThread.join();
   } else {
     kGlobalPromise.setValue(0);
-    testDeferredWhileLoop(UseExecutor::YES);
+    testDeferredWhileLoop(std::string(argv[1]) == "executor" ? UseExecutor::YES
+                                                             : UseExecutor::NO);
   }
 }

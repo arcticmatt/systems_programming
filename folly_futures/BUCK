@@ -43,5 +43,6 @@ cxx_binary(
     "//:folly",
     "//:gflags",
     "//:glog",
+    "//:libevent_core",
   ],
 )
