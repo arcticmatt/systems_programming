@@ -23,6 +23,17 @@ prebuilt_cxx_library(
 )
 
 prebuilt_cxx_library(
+  name = "flatbuffers",
+  header_dirs = [
+    "flatbuffers/include/",
+  ],
+  header_only = True,
+  visibility = [
+    'PUBLIC',
+  ],
+)
+
+prebuilt_cxx_library(
   name="folly",
   header_dirs = [
     "folly/2020.02.10.00/include/",

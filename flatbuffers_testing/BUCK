@@ -1,0 +1,9 @@
+cxx_binary(
+  name = "flatbuffers_testing",
+  srcs = [
+    "FlatBuffersTesting.cpp",
+  ],
+  deps = [
+    "//:flatbuffers",
+  ],
+)
