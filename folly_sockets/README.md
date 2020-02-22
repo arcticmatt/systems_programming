@@ -1,6 +1,6 @@
 # Folly Async Sockets
 
-# Overview
+## Overview
 
 This directory contains code related to Folly Async Sockets. For example, in the simplest demo, a client  `AsyncSocket` connects to an `AsyncServerSocket`. The `AsyncServerSocket` creates a new `AsyncSocket` to talk to the peer `AsyncSocket`. The client socket then sends data obtained via STDIN to its peer, and its peer writes it to STDOUT. More details on this demo can be found below.
 
@@ -12,7 +12,7 @@ Here is a (very) high-level summary of the components used in these demos, obtai
 - [`AsyncWriter::WriteCallback`](https://github.com/facebook/folly/blob/master/folly/io/async/AsyncTransport.h) - invoked by `AsyncSocket` when writes succeed/error.
 - [`EventBase`](https://github.com/facebook/folly/blob/master/folly/io/async/EventBase.h) - provides a main loop that notifies `EventHandler` callback objects when I/O is ready on a file descriptor, and notifies `AsyncTimeout` objects when a specified timeout has expired. More complex, higher-level callback mechanisms can then be built on top of `EventHandler` and `AsyncTimeout`.
 
-# STDIN / STDOUT Demo
+## STDIN / STDOUT Demo
 
 This is the demo described above, in which a client `AsyncSocket` sends data obtained via STDIN to its peer, and its peer writes it to STDOUT. You can run this demo like so:
 
@@ -45,19 +45,19 @@ This is the demo described above, in which a client `AsyncSocket` sends data obt
 
 Note that multiple clients can be run at the same time.
 
-# How It Works
+## How It Works
 
 Here's a more in-depth explanation of how this demo works. 
 
-## On the Client Side
+### On the Client Side
 
 1. The client `AsyncSocket` (I'll refer to this socket as "the client" from now on) is constructed with an `EventBase` using `AsyncSocket::newSocket`. The `EventBase` runs the callbacks associated with the `AsyncSocket` in its thread.
 2. The client connects to the `AsyncServerSocket` using [`AsyncSocket::connect`](https://our.internmc.facebook.com/intern/codex/symbol/fbcode:folly/AsyncSocket/connect;ConnectCallback*,const_std::string&,uint16/).
 3. The client writes to the socket using `AsyncSocket::write`. A callback is passed to `AsyncSocket::write` - on success, that callback's `writeSuccess` function is called on the `EventBase`'s thread. 
 
-## On the Server Side
+### On the Server Side
 
-### Setup
+#### Setup
 
 1. The server `AsyncServerSocket` (I'll refer to this socket as "the server" from now on) is constructed with an `EventBase` using `AsyncServerSocket::newSocket`. The `EventBase` runs the callbacks associated with the `AsyncServerSocket` in its thread.
 2. The server is bound to a well-known address.
@@ -66,17 +66,17 @@ Here's a more in-depth explanation of how this demo works.
 5. The server starts accepting connections by calling `AsyncServerSocket::startAccepting`. 
 6. The `EventBase` is put onto a thread and starts running, which means the `AcceptCallback` can start running.
 
-### Accepting Connections
+#### Accepting Connections
 
 1. Inside of `AcceptCallback::connectionAccepted`, a new `AsyncSocket` is created. The `connectionAccepted` callback gives us a file descriptor to use. We re-use the `EventBase` from "Setup." This socket will be used to communicate with the client.
 2. After constructing the new `AsyncSocket`, we set its read callback to `ReadCallback`.
 
-### Reading Data
+#### Reading Data
 
 1. When data from the client becomes available, `ReadCallback::getReadBuffer` is invoked to determine where the data gets read to. We just read it into a buffer that belongs to `ReadCallback`.
 2. When data has been successfully read into the buffer returned by `ReadCallback::getReadBuffer`, `ReadCallback::readDataAvailable` is called. In this function, we write to STDOUT. 
 
-## How the Callbacks Get Called
+### How the Callbacks Get Called
 
 By utilizing `AsyncSocket` and `AsyncServerSocket`, our communication is non-blocking. Writes are queued and written asynchronously, and reads are processed via `ReadCallback`. You can compare this to how communication traditionally happens over sockets; there, the call to `read` blocks, as does the call to `write`. I think the difference when reading data is the clearest. Here's what our traditional implementation looks like in `unix_server_socket.c`:
 

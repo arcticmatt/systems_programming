@@ -1,6 +1,6 @@
 # Folly Futures
 
-# Overview
+## Overview
 
 [https://engineering.fb.com/developer-tools/futures-for-c-11-at-facebook/](https://engineering.fb.com/developer-tools/futures-for-c-11-at-facebook/) has a good explanation.
 
@@ -21,9 +21,9 @@ Future<Output> fooAsync(Input);
 void fooAsyncCallback(Input, Callback<Output>);
 ```
 
-# Defer vs. Then
+## Defer vs. Then
 
-## Run the Demo
+### Run the Demo
 
     mlim@mlim-mbp systems_programming % buck run //folly_futures:defer_vs_then -- INSERT --
     Building: finished in 1.2 sec (100%) 7/7 jobs, 0 updated
@@ -48,7 +48,7 @@ void fooAsyncCallback(Input, Callback<Output>);
     [0x70000ac75000 testThen] Looping...
     [0x70000ac75000 testThen] Looping...
 
-## Some Explanation
+### Some Explanation
 
 `SemiFuture::defer` and `Future::then` are quite similar. The main things to remember are that
 
@@ -60,9 +60,9 @@ Some other things to note about this demo:
 1. Even though the code in the `defer` and `then` blocks loops forever, we still return immediately from `testDefer` and `testThen`. This is what futures are for! The long running operation is deferred and does not block the main thread.
 2. `testThen` takes in an executor, otherwise `testThen` would block. See comments for more details.
 
-# Timeouts
+## Timeouts
 
-## Run the Demo
+### Run the Demo
 
     mlim@mlim-mbp systems_programming % buck run //folly_futures:timeouts promise                                                                    -- INSERT --
     Building: finished in 4.2 sec (100%) 11/11 jobs, 2 updated
@@ -100,13 +100,13 @@ Some other things to note about this demo:
     [0x1178d8dc0 deferredWhileLoop] Looping...
     [0x1178d8dc0 deferredWhileLoop] Looping...
 
-## Some Explanation
+### Some Explanation
 
-### `testGlobalPromise`
+#### `testGlobalPromise`
 
 - We can have a timeout without using an `executor` because there is no extra work attached to the `kGlobalSf` (e.g. no `defer` block that would block the main thread).
 - Note that simply calling `get` with a timeout does not cause the interrupt handler to be called. However, calling `within(timeout).get()` does cause the interrupt handler to be called.
 
-### `testDeferredWhileLoop`
+#### `testDeferredWhileLoop`
 
 - In this case, we need to use an executor in order to use a timeout because the code in the `defer` block blocks. I.e. if we don't use an executor, the code in the deferred while loop runs on the main thread (`0x1178d8dc0` in the example run). When we use `ThreadedExecutor`, we can see that the main thread is `0x10cedbdc0` and the deferred while loop runs on thread `0x7000084bc000`, so the timeout actually works.

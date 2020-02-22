@@ -1,6 +1,6 @@
 # FlatBuffers
 
-# Installing
+## Installing
 
     $ git clone https://github.com/google/flatbuffers.git
     $ cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
@@ -12,7 +12,17 @@
 
 After doing this, I just moved the `flatbuffers` directory into `systems_programming`.
 
-# Demo 1: Serialize in C++, Deserialize in Python
+## Generating FlatBuffers Code
+
+```
+// Inside flatbuffers_testing/cpp
+$ ./../../flatbuffers/flatc --cpp --gen-object-api ../simple.fbs
+
+// Inside flatbuffers_testing/python
+$ ./../../flatbuffers/flatc --python ../simple.fbs
+```
+
+## Demo 1: Serialize in C++, Deserialize in Python
 
     $ buck run //flatbuffers_testing:simple_fbs_test
     // This creates test_struct_binary.out, test_struct_as_root_binary.out, and test_table_binary.out
@@ -40,7 +50,7 @@ This demonstrates:
     - A struct serialized by writing the root offset.
     - A table with the same fields as the above two.
 
-# Demo 2: Size Difference Between Structs and Tables
+## Demo 2: Size Difference Between Structs and Tables
 
     $ buck run //flatbuffers_testing:simple_fbs_test
     // This will print out some other stuff, and then the following
@@ -67,13 +77,13 @@ This shows the size difference between serializing:
 
 In the future I hope to do a more in-depth, byte-level dive into this topic. For now, [https://github.com/mzaks/FlatBuffersSwift/wiki/FlatBuffers-Explained](https://github.com/mzaks/FlatBuffersSwift/wiki/FlatBuffers-Explained) is a good read.
 
-# Resources
+## Resources
 
-## Links
+### Links
 
 - [https://github.com/mzaks/FlatBuffersSwift/wiki/FlatBuffers-Explained](https://github.com/mzaks/FlatBuffersSwift/wiki/FlatBuffers-Explained)
 - [https://google.github.io/flatbuffers/index.html](https://google.github.io/flatbuffers/index.html)
 
-## Notes
+### Notes
 
 - "If instead of creating a vector from an existing array you serialize elements individually one by one, take care to note that this happens in reverse order, as buffers are built back to front." ([source](https://google.github.io/flatbuffers/flatbuffers_guide_tutorial.html))

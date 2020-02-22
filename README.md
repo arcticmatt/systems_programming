@@ -1,5 +1,11 @@
 # Messing Around With Systems Programming 
-This repository contains some code I've written to help me better understand systems programming APIs and concepts (e.g. Unix domain sockets).
+This repository contains some code I've written to help me better understand systems programming APIs and concepts, and things that are within the realm of systems programming. Here's some stuff that's covered:
+
+* Unix Domain Sockets
+* FlatBuffers
+* Folly (Facebook's open source C++ library)
+  * Folly Futures
+  * Folly Async Sockets
 
 ## Running the Code
 
