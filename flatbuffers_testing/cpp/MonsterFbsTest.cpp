@@ -1,3 +1,8 @@
+//
+// Run:
+// ./../../flatbuffers/flatc --cpp --gen-object-api ../monster.fbs
+//
+
 #include "monster_generated.h"
 
 #include <iostream>

@@ -14,28 +14,35 @@ struct TestTable;
 struct TestTableBuilder;
 struct TestTableT;
 
-FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(2) TestStruct FLATBUFFERS_FINAL_CLASS {
+FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(1) TestStruct FLATBUFFERS_FINAL_CLASS {
  private:
-  uint16_t a_;
+  uint8_t field_a_;
+  uint8_t field_b_;
 
  public:
   TestStruct() {
     memset(static_cast<void *>(this), 0, sizeof(TestStruct));
   }
-  TestStruct(uint16_t _a)
-      : a_(flatbuffers::EndianScalar(_a)) {
+  TestStruct(uint8_t _field_a, uint8_t _field_b)
+      : field_a_(flatbuffers::EndianScalar(_field_a)),
+        field_b_(flatbuffers::EndianScalar(_field_b)) {
   }
-  uint16_t a() const {
-    return flatbuffers::EndianScalar(a_);
+  uint8_t field_a() const {
+    return flatbuffers::EndianScalar(field_a_);
+  }
+  uint8_t field_b() const {
+    return flatbuffers::EndianScalar(field_b_);
   }
 };
 FLATBUFFERS_STRUCT_END(TestStruct, 2);
 
 struct TestTableT : public flatbuffers::NativeTable {
   typedef TestTable TableType;
-  uint16_t a;
+  uint8_t field_a;
+  uint8_t field_b;
   TestTableT()
-      : a(0) {
+      : field_a(0),
+        field_b(0) {
   }
 };
 
@@ -43,14 +50,19 @@ struct TestTable FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   typedef TestTableT NativeTableType;
   typedef TestTableBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
-    VT_A = 4
+    VT_FIELD_A = 4,
+    VT_FIELD_B = 6
   };
-  uint16_t a() const {
-    return GetField<uint16_t>(VT_A, 0);
+  uint8_t field_a() const {
+    return GetField<uint8_t>(VT_FIELD_A, 0);
+  }
+  uint8_t field_b() const {
+    return GetField<uint8_t>(VT_FIELD_B, 0);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<uint16_t>(verifier, VT_A) &&
+           VerifyField<uint8_t>(verifier, VT_FIELD_A) &&
+           VerifyField<uint8_t>(verifier, VT_FIELD_B) &&
            verifier.EndTable();
   }
   TestTableT *UnPack(const flatbuffers::resolver_function_t *_resolver = nullptr) const;
@@ -62,8 +74,11 @@ struct TestTableBuilder {
   typedef TestTable Table;
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_a(uint16_t a) {
-    fbb_.AddElement<uint16_t>(TestTable::VT_A, a, 0);
+  void add_field_a(uint8_t field_a) {
+    fbb_.AddElement<uint8_t>(TestTable::VT_FIELD_A, field_a, 0);
+  }
+  void add_field_b(uint8_t field_b) {
+    fbb_.AddElement<uint8_t>(TestTable::VT_FIELD_B, field_b, 0);
   }
   explicit TestTableBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -79,9 +94,11 @@ struct TestTableBuilder {
 
 inline flatbuffers::Offset<TestTable> CreateTestTable(
     flatbuffers::FlatBufferBuilder &_fbb,
-    uint16_t a = 0) {
+    uint8_t field_a = 0,
+    uint8_t field_b = 0) {
   TestTableBuilder builder_(_fbb);
-  builder_.add_a(a);
+  builder_.add_field_b(field_b);
+  builder_.add_field_a(field_a);
   return builder_.Finish();
 }
 
@@ -96,7 +113,8 @@ inline TestTableT *TestTable::UnPack(const flatbuffers::resolver_function_t *_re
 inline void TestTable::UnPackTo(TestTableT *_o, const flatbuffers::resolver_function_t *_resolver) const {
   (void)_o;
   (void)_resolver;
-  { auto _e = a(); _o->a = _e; }
+  { auto _e = field_a(); _o->field_a = _e; }
+  { auto _e = field_b(); _o->field_b = _e; }
 }
 
 inline flatbuffers::Offset<TestTable> TestTable::Pack(flatbuffers::FlatBufferBuilder &_fbb, const TestTableT* _o, const flatbuffers::rehasher_function_t *_rehasher) {
@@ -107,10 +125,12 @@ inline flatbuffers::Offset<TestTable> CreateTestTable(flatbuffers::FlatBufferBui
   (void)_rehasher;
   (void)_o;
   struct _VectorArgs { flatbuffers::FlatBufferBuilder *__fbb; const TestTableT* __o; const flatbuffers::rehasher_function_t *__rehasher; } _va = { &_fbb, _o, _rehasher}; (void)_va;
-  auto _a = _o->a;
+  auto _field_a = _o->field_a;
+  auto _field_b = _o->field_b;
   return MyFbs::CreateTestTable(
       _fbb,
-      _a);
+      _field_a,
+      _field_b);
 }
 
 }  // namespace MyFbs

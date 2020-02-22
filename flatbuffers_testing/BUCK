@@ -1,7 +1,7 @@
 cxx_binary(
   name = "monster_fbs_test",
   srcs = [
-    "MonsterFbsTest.cpp",
+    "cpp/MonsterFbsTest.cpp",
   ],
   deps = [
     "//:flatbuffers",
@@ -11,7 +11,7 @@ cxx_binary(
 cxx_binary(
   name = "simple_fbs_test",
   srcs = [
-    "SimpleFbsTest.cpp",
+    "cpp/SimpleFbsTest.cpp",
   ],
   deps = [
     "//:flatbuffers",

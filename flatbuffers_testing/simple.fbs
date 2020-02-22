@@ -3,9 +3,11 @@
 namespace MyFbs;
 
 struct TestStruct {
-  a: uint16;
+  field_a: uint8;
+  field_b: uint8;
 }
 
 table TestTable {
-  a: uint16;
+  field_a: uint8;
+  field_b: uint8;
 }
