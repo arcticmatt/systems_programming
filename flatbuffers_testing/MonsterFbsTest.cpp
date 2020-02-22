@@ -70,7 +70,7 @@ uint8_t *serializeMonster1() {
   return buf;
 }
 
-flatbuffers::Offset<Monster> createMonster2() {
+uint8_t *serializeMonster2() {
   // Create a `FlatBufferBuilder`, which will be used to create our
   // monsters' FlatBuffers.
   flatbuffers::FlatBufferBuilder builder(1024);
@@ -87,7 +87,8 @@ flatbuffers::Offset<Monster> createMonster2() {
 
   flatbuffers::Offset<Monster> orc = monsterBuilder.Finish();
   builder.Finish(orc);
-  return orc;
+
+  return builder.GetBufferPointer();
 }
 
 void deserializeMonster(uint8_t *buf) {
@@ -108,8 +109,6 @@ void deserializeMonster(uint8_t *buf) {
 }
 
 int main() {
-  std::cout << "Hello" << std::endl;
-  std::cout << "sizeof(Vec3) = " << sizeof(Vec3) << std::endl;
   uint8_t *buf = serializeMonster1();
   deserializeMonster(buf);
 }

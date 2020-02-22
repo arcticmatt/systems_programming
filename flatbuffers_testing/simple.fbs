@@ -1,0 +1,11 @@
+// Example IDL file for our monster's schema.
+
+namespace MyFbs;
+
+struct TestStruct {
+  a: uint16;
+}
+
+table TestTable {
+  a: uint16;
+}
