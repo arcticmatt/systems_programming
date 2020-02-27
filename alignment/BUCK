@@ -1,0 +1,8 @@
+cxx_binary(
+  name = 'alignment',
+  srcs = [
+    'Alignment.cpp',
+  ],
+  deps = [
+  ],
+)
