@@ -79,9 +79,17 @@ void testAlignmentOfDifferentTypes() {
   }
 }
 
+void mallocTest() {
+  for (int i = 0; i < 10; i++) {
+    uint8_t *pointer = (uint8_t *)malloc(16);
+    std::cout << "pointer = " << (uint16_t *)pointer << std::endl;
+  }
+}
+
 int main() {
   std::cout << "Hello" << std::endl;
-  isAligned();
-  isNotAligned();
-  testAlignmentOfDifferentTypes();
+  // isAligned();
+  // isNotAligned();
+  // testAlignmentOfDifferentTypes();
+  mallocTest();
 }

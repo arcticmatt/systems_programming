@@ -1,7 +1,22 @@
 cxx_binary(
+  name = 'maps',
+  srcs = [
+    'Maps.cpp',
+  ],
+  headers = [
+    'TestClasses.h',
+  ],
+  deps = [
+  ],
+)
+
+cxx_binary(
   name = 'params',
   srcs = [
     'Params.cpp',
+  ],
+  headers = [
+    'TestClasses.h',
   ],
   deps = [
   ],
