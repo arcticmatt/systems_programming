@@ -74,6 +74,7 @@ Our `.buckconfig` file will look like this, since [`folly` requires at least C++
 
 Now, let's build the example we built above with `clang++`, but now using Buck! 
 
+    mkdir myfolly && cd myfolly
     mkdir folly_getting_started
     cd folly_getting_started
     touch HelloWorld.cpp
@@ -96,7 +97,7 @@ The `BUCK` file in `folly_test/` will look like this.
 
 And now we can run it using Buck.
 
-    $ buck run //folly_test:hello_world                                                                          -- INSERT --
+    $ buck run //myfolly/folly_test:hello_world
     Building: finished in 1.3 sec (100%) 4/4 jobs, 0 updated
       Total time: 1.7 sec
     Hello, Folly World!

@@ -16,7 +16,7 @@ Here is a (very) high-level summary of the components used in these demos, obtai
 
 This is the demo described above, in which a client `AsyncSocket` sends data obtained via STDIN to its peer, and its peer writes it to STDOUT. You can run this demo like so:
 
-    $ buck run //folly_sockets:async_server_socket
+    $ buck run //myfolly/folly_sockets:async_server_socket
     Building: finished in 1.6 sec (100%) 9/9 jobs, 0 updated
       Total time: 2.2 sec
     Server socket bound to address = [::1]:52280
@@ -32,7 +32,7 @@ This is the demo described above, in which a client `AsyncSocket` sends data obt
     [DEBUG] readDataAvailable, len = 2
     [::1]:56917 sent data: yo
 
-    $ buck run //folly_sockets:async_client_socket
+    $ buck run //myfolly/folly_sockets:async_client_socket
     Building: finished in 2.8 sec (100%) 12/12 jobs, 5 updated
       Total time: 3.2 sec
     Client socket is at address = [::1]:56917

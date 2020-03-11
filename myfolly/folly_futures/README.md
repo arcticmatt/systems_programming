@@ -25,7 +25,7 @@ void fooAsyncCallback(Input, Callback<Output>);
 
 ### Run the Demo
 
-    mlim@mlim-mbp systems_programming % buck run //folly_futures:defer_vs_then -- INSERT --
+    mlim@mlim-mbp systems_programming % buck run //myfolly/folly_futures:defer_vs_then
     Building: finished in 1.2 sec (100%) 7/7 jobs, 0 updated
     Total time: 1.6 sec
     [0x10bce1dc0 main] Start
@@ -64,7 +64,7 @@ Some other things to note about this demo:
 
 ### Run the Demo
 
-    mlim@mlim-mbp systems_programming % buck run //folly_futures:timeouts promise                                                                    -- INSERT --
+    mlim@mlim-mbp systems_programming % buck run //myfolly/folly_futures:timeouts promise
     Building: finished in 4.2 sec (100%) 11/11 jobs, 2 updated
       Total time: 4.7 sec
     [0x70000a02f000 kGlobal] Looping...
@@ -72,7 +72,7 @@ Some other things to note about this demo:
     [0x1034c2dc0 main] In kGlobalPromise's interrupt handler!
     [0x1034c2dc0 testGlobalPromise] ===== folly FutureTimeout exception: Timed out =====
 
-    mlim@mlim-mbp systems_programming % buck run //folly_futures:timeouts executor                                                                   -- INSERT --
+    mlim@mlim-mbp systems_programming % buck run //myfolly/folly_futures:timeouts executor
     Building: finished in 3.0 sec (100%) 7/7 jobs, 0 updated
       Total time: 3.5 sec
     [0x7000083b6000 kGlobal] Looping...
@@ -87,7 +87,7 @@ Some other things to note about this demo:
     [0x7000084bc000 deferredWhileLoop] Looping...
     [0x7000084bc000 deferredWhileLoop] Looping...
 
-    mlim@mlim-mbp systems_programming % buck run //folly_futures:timeouts noexecutor                                                                 -- INSERT --
+    mlim@mlim-mbp systems_programming % buck run //myfolly/folly_futures:timeouts noexecutor 
     Building: finished in 3.0 sec (100%) 7/7 jobs, 0 updated
       Total time: 3.6 sec
     [0x700006905000 kGlobal] Looping...
