@@ -21,3 +21,15 @@ cxx_binary(
   deps = [
   ],
 )
+
+cxx_binary(
+  name = 'vectors',
+  srcs = [
+    'Vectors.cpp',
+  ],
+  headers = [
+    'TestClasses.h',
+  ],
+  deps = [
+  ],
+)

@@ -27,5 +27,5 @@ void useAll() {
 int main() {
   //   useAll();
   TestClass t1;
-  TestClass2 t2(t1);
+  TestClass2 t2(std::move(t1));
 }

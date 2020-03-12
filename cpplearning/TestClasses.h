@@ -52,7 +52,7 @@ private:
 
 class TestClass2 {
 public:
-  TestClass2(TestClass t) : t1(std::move(t)) {
+  TestClass2(TestClass &&t) : t1(std::move(t)) {
     std::cout << "TestClass2(TestClass t)" << std::endl;
   }
 

@@ -69,6 +69,17 @@ prebuilt_cxx_library(
 )
 
 prebuilt_cxx_library(
+  name = "gtest",
+  header_dirs = [
+    "googletest/googletest/include/",
+  ],
+  static_lib = "googletest/build/lib/libgtest.a",
+  visibility = [
+    'PUBLIC',
+  ],
+)
+
+prebuilt_cxx_library(
   name = "libevent_core",
   header_dirs = [
     "libevent/2.1.11_1/include/",

@@ -1,0 +1,13 @@
+cxx_test(
+  name = 'io_buf_test',
+  srcs = [
+    'test/IOBufTest.cpp',
+  ],
+  deps = [
+    "//:boost",
+    "//:folly",
+    '//:gflags',
+    '//:glog',
+    '//:gtest',
+  ],
+)
