@@ -23,6 +23,31 @@ cxx_binary(
 )
 
 cxx_binary(
+  name = 'pointers',
+  srcs = [
+    'Pointers.cpp',
+  ],
+  headers = [
+    'TestClasses.h',
+  ],
+  deps = [
+  ],
+)
+
+cxx_binary(
+  name = 'test_classes',
+  srcs = [
+    'TestClasses.cpp',
+  ],
+  headers = [
+    'TestClasses.h',
+  ],
+  deps = [
+  ],
+)
+
+
+cxx_binary(
   name = 'vectors',
   srcs = [
     'Vectors.cpp',

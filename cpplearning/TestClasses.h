@@ -13,7 +13,10 @@ public:
   }
 
   // Destructor
-  ~TestClass() { std::cout << "Destructor: ~TestClass()" << std::endl; }
+  ~TestClass() {
+    std::cout << "Destructor: ~TestClass()" << std::endl;
+    a_ = -1;
+  }
 
   // Copy constructor
   TestClass(const TestClass &t) {
@@ -57,4 +60,12 @@ public:
   }
 
   TestClass t1;
+};
+
+class TestClass3 {
+public:
+  TestClass3(const std::string str, int a) : str_(str), a_(a) {}
+
+  const std::string str_;
+  int a_ = 5;
 };

@@ -134,6 +134,25 @@ TEST(IOBufTest, Clone) {
 
   auto cloneBuf = buf->clone();
   printBufInfo(cloneBuf, "cloneBuf");
+  cloneBuf->trimStart(3);
+  cloneBuf->append(3);
+  printBufInfo(buf, "buf");
+  printBufInfo(cloneBuf, "cloneBuf");
+
+  auto ptr = cloneBuf->writableData();
+  *ptr = 's';
+  printBufInfo(buf, "buf");
+  printBufInfo(cloneBuf, "cloneBuf");
+
+  buf->unshare();
+  printBufInfo(buf, "buf");
+  printBufInfo(cloneBuf, "cloneBuf");
+}
+
+TEST(IOBufTest, Wrap) {
+  uint8_t *buffer = (uint8_t *)malloc(12);
+  auto iobuf = folly::IOBuf::wrapBuffer(buffer, 0);
+  printBufInfo(iobuf, "iobuf");
 }
 
 int main(int argc, char **argv) {
