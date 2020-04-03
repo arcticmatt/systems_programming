@@ -1,0 +1,21 @@
+cxx_binary(
+  name = 'duplicate_symbols',
+  srcs = [
+    'DuplicateSymbols.cpp',
+  ],
+  deps = [
+      ":duplicate_symbols_lib",
+  ],
+)
+
+cxx_library(
+  name = 'duplicate_symbols_lib',
+  srcs = [
+    'DuplicateSymbolsLib.cpp',
+  ],
+  headers = [
+    'DuplicateSymbolsLib.h',
+  ],
+  deps = [
+  ],
+)
