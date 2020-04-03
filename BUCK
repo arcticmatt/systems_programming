@@ -12,6 +12,17 @@ prebuilt_cxx_library(
 )
 
 prebuilt_cxx_library(
+  name = "cli11",
+  header_dirs = [
+    "cli11/include",
+  ],
+  header_only = True,
+  visibility = [
+    'PUBLIC',
+  ],
+)
+
+prebuilt_cxx_library(
   name = "double_conversion",
   header_dirs = [
     "double-conversion/3.1.5/include/",

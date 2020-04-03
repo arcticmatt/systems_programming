@@ -1,4 +1,23 @@
 cxx_binary(
+  name = 'collect_timeouts',
+  srcs = [
+    'CollectTimeouts.cpp',
+  ],
+  headers = [
+    "ThreadUtils.h",
+  ],
+  deps = [
+    "//:boost",
+    "//:cli11",
+    "//:double_conversion",
+    "//:folly",
+    "//:gflags",
+    "//:glog",
+    "//:libevent_core",
+  ],
+)
+
+cxx_binary(
   name = 'defer_vs_then',
   srcs = [
     'DeferVsThen.cpp',
