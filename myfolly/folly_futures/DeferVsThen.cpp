@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
   printf("%sAfter running sf testDefer\n",
          tidLabelStr(std::this_thread::get_id(), label).c_str());
 
-  auto fut = testThen(exec);
-  printf("%sAfter calling testThen\n",
-         tidLabelStr(std::this_thread::get_id(), label).c_str());
+  // auto fut = testThen(exec);
+  // printf("%sAfter calling testThen\n",
+  //        tidLabelStr(std::this_thread::get_id(), label).c_str());
 }

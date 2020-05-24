@@ -32,8 +32,9 @@ public:
   void getReadBuffer(void **bufReturn, size_t *lenReturn) override {
     std::cout << kDebugPrefix << "getReadBuffer" << std::endl;
 
-    *bufReturn = buf_;
-    *lenReturn = 1000;
+    *bufReturn = new char[2];
+    *lenReturn = 2;
+    buf_ = (char *)*bufReturn;
   }
 
   void readDataAvailable(size_t len) noexcept override {
@@ -59,7 +60,7 @@ private:
   const std::string label_;
 
   /// The buffer data is read into.
-  char *buf_ = new char[500];
+  char *buf_ = nullptr;
 };
 
 /// Accepts connections and adds them to a global map.

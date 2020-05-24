@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <memory>
 
 class TestClass {
 public:
@@ -25,10 +26,11 @@ public:
   }
 
   // Move constructor
-  TestClass(const TestClass &&t) {
+  TestClass(TestClass &&t) {
     std::cout << "Move Constructor: TestClass(const TestClass &&t)"
               << std::endl;
     a_ = t.a_;
+    t.a_ = 0;
   }
 
   // Copy assignment
@@ -40,14 +42,17 @@ public:
   }
 
   // Move assignment
-  TestClass &operator=(const TestClass &&t) {
+  TestClass &operator=(TestClass &&t) {
     std::cout << "Move Assignment: TestClass &operator=(const TestClass &&t)"
               << std::endl;
     a_ = t.a_;
+    t.a_ = 0;
     return *this;
   }
 
   int a() const { return a_; }
+
+  std::shared_ptr<int> sharedPtr = nullptr;
 
 private:
   int a_ = 5;
@@ -66,6 +71,6 @@ class TestClass3 {
 public:
   TestClass3(const std::string str, int a) : str_(str), a_(a) {}
 
-  const std::string str_;
+  std::string str_;
   int a_ = 5;
 };

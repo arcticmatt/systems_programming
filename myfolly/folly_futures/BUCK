@@ -1,4 +1,21 @@
 cxx_binary(
+  name = 'cpu_executor',
+  srcs = [
+    'CpuExecutor.cpp',
+  ],
+  headers = [
+    "ThreadUtils.h",
+  ],
+  deps = [
+    "//:boost",
+    "//:double_conversion",
+    "//:folly",
+    "//:gflags",
+    "//:glog",
+  ],
+)
+
+cxx_binary(
   name = 'collect_timeouts',
   srcs = [
     'CollectTimeouts.cpp',

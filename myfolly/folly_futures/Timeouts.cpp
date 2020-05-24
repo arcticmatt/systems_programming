@@ -49,7 +49,8 @@ void testDeferredWhileLoop(UseExecutor useExecutor) {
          static_cast<std::underlying_type<UseExecutor>::type>(useExecutor));
 
   if (useExecutor == UseExecutor::YES) {
-    folly::ThreadedExecutor exec;
+    // folly::ThreadedExecutor exec;
+    folly::CPUThreadPoolExecutor exec{1};
 
     std::cout << "Before calling deferredWhileLoop" << std::endl;
     try {

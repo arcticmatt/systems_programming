@@ -1,0 +1,11 @@
+cxx_binary(
+  name = 'prefix_stdout',
+  srcs = [
+    'PrefixStdout.cpp',
+  ],
+  deps = [
+  ],
+  compiler_flags = [
+    "-g",
+  ],
+)

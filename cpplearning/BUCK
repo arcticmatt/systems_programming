@@ -1,12 +1,28 @@
 cxx_binary(
+  name = 'condition_variable',
+  srcs = [
+    'ConditionVariable.cpp',
+  ],
+  deps = [
+  ],
+)
+
+cxx_binary(
   name = 'maps',
   srcs = [
     'Maps.cpp',
   ],
-  headers = [
-    'TestClasses.h',
+  deps = [
+  ],
+)
+
+cxx_binary(
+  name = 'move',
+  srcs = [
+    'Move.cpp',
   ],
   deps = [
+    ':test_classes',
   ],
 )
 
@@ -15,10 +31,8 @@ cxx_binary(
   srcs = [
     'Params.cpp',
   ],
-  headers = [
-    'TestClasses.h',
-  ],
   deps = [
+    ':test_classes',
   ],
 )
 
@@ -28,7 +42,6 @@ cxx_binary(
     'Pointers.cpp',
   ],
   headers = [
-    'TestClasses.h',
   ],
   deps = [
   ],
@@ -44,14 +57,23 @@ cxx_binary(
 )
 
 cxx_binary(
-  name = 'test_classes',
+  name = 'templates',
   srcs = [
-    'TestClasses.cpp',
+    'Templates.cpp',
   ],
   headers = [
-    'TestClasses.h',
   ],
   deps = [
+  ],
+)
+
+cxx_binary(
+  name = 'test_classes_bin',
+  srcs = [
+    'classes/TestClasses.cpp',
+  ],
+  deps = [
+    ':test_classes',
   ],
 )
 
@@ -61,9 +83,15 @@ cxx_binary(
   srcs = [
     'Vectors.cpp',
   ],
-  headers = [
-    'TestClasses.h',
-  ],
   deps = [
+    ':test_classes',
+  ],
+)
+
+cxx_library(
+  name = 'test_classes',
+  headers = [
+    'classes/DefaultMove.h',
+    'classes/TestClasses.h',
   ],
 )

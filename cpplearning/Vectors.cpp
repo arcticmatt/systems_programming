@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-#include "TestClasses.h"
+#include "classes/TestClasses.h"
 
 int main() {
   std::cout << "Constructing map" << std::endl;
