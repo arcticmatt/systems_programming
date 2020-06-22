@@ -2,3 +2,4 @@
 .lsp.buckd
 buck-out
 .buckd
+*.out
