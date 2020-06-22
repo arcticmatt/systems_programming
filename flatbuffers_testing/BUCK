@@ -9,6 +9,16 @@ cxx_binary(
 )
 
 cxx_binary(
+  name = "simple_fbs_compatibility",
+  srcs = [
+    "cpp/SimpleFbsCompatibility.cpp",
+  ],
+  deps = [
+    "//:flatbuffers",
+  ],
+)
+
+cxx_binary(
   name = "simple_fbs_test",
   srcs = [
     "cpp/SimpleFbsTest.cpp",

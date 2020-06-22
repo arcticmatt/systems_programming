@@ -7,7 +7,23 @@ struct TestStruct {
   field_b: uint8;
 }
 
+struct SimpleStruct {
+  field_a: uint8;
+}
+
 table TestTable {
+  field_a: uint8;
+  field_b: uint8;
+  field_struct: SimpleStruct;
+}
+
+table TestTable2 {
+  field_a: uint8;
+  field_b: uint8;
+  field_struct: SimpleStruct;
+}
+
+table TestTable3 {
   field_a: uint8;
   field_b: uint8;
 }

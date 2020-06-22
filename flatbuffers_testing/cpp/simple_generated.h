@@ -10,9 +10,19 @@ namespace MyFbs {
 
 struct TestStruct;
 
+struct SimpleStruct;
+
 struct TestTable;
 struct TestTableBuilder;
 struct TestTableT;
+
+struct TestTable2;
+struct TestTable2Builder;
+struct TestTable2T;
+
+struct TestTable3;
+struct TestTable3Builder;
+struct TestTable3T;
 
 FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(1) TestStruct FLATBUFFERS_FINAL_CLASS {
  private:
@@ -36,10 +46,28 @@ FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(1) TestStruct FLATBUFFERS_FINAL_CLASS {
 };
 FLATBUFFERS_STRUCT_END(TestStruct, 2);
 
+FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(1) SimpleStruct FLATBUFFERS_FINAL_CLASS {
+ private:
+  uint8_t field_a_;
+
+ public:
+  SimpleStruct() {
+    memset(static_cast<void *>(this), 0, sizeof(SimpleStruct));
+  }
+  SimpleStruct(uint8_t _field_a)
+      : field_a_(flatbuffers::EndianScalar(_field_a)) {
+  }
+  uint8_t field_a() const {
+    return flatbuffers::EndianScalar(field_a_);
+  }
+};
+FLATBUFFERS_STRUCT_END(SimpleStruct, 1);
+
 struct TestTableT : public flatbuffers::NativeTable {
   typedef TestTable TableType;
   uint8_t field_a;
   uint8_t field_b;
+  std::unique_ptr<MyFbs::SimpleStruct> field_struct;
   TestTableT()
       : field_a(0),
         field_b(0) {
@@ -51,7 +79,8 @@ struct TestTable FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   typedef TestTableBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_FIELD_A = 4,
-    VT_FIELD_B = 6
+    VT_FIELD_B = 6,
+    VT_FIELD_STRUCT = 8
   };
   uint8_t field_a() const {
     return GetField<uint8_t>(VT_FIELD_A, 0);
@@ -59,10 +88,14 @@ struct TestTable FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   uint8_t field_b() const {
     return GetField<uint8_t>(VT_FIELD_B, 0);
   }
+  const MyFbs::SimpleStruct *field_struct() const {
+    return GetStruct<const MyFbs::SimpleStruct *>(VT_FIELD_STRUCT);
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<uint8_t>(verifier, VT_FIELD_A) &&
            VerifyField<uint8_t>(verifier, VT_FIELD_B) &&
+           VerifyField<MyFbs::SimpleStruct>(verifier, VT_FIELD_STRUCT) &&
            verifier.EndTable();
   }
   TestTableT *UnPack(const flatbuffers::resolver_function_t *_resolver = nullptr) const;
@@ -80,6 +113,9 @@ struct TestTableBuilder {
   void add_field_b(uint8_t field_b) {
     fbb_.AddElement<uint8_t>(TestTable::VT_FIELD_B, field_b, 0);
   }
+  void add_field_struct(const MyFbs::SimpleStruct *field_struct) {
+    fbb_.AddStruct(TestTable::VT_FIELD_STRUCT, field_struct);
+  }
   explicit TestTableBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -95,14 +131,163 @@ struct TestTableBuilder {
 inline flatbuffers::Offset<TestTable> CreateTestTable(
     flatbuffers::FlatBufferBuilder &_fbb,
     uint8_t field_a = 0,
-    uint8_t field_b = 0) {
+    uint8_t field_b = 0,
+    const MyFbs::SimpleStruct *field_struct = 0) {
   TestTableBuilder builder_(_fbb);
+  builder_.add_field_struct(field_struct);
   builder_.add_field_b(field_b);
   builder_.add_field_a(field_a);
   return builder_.Finish();
 }
 
 flatbuffers::Offset<TestTable> CreateTestTable(flatbuffers::FlatBufferBuilder &_fbb, const TestTableT *_o, const flatbuffers::rehasher_function_t *_rehasher = nullptr);
+
+struct TestTable2T : public flatbuffers::NativeTable {
+  typedef TestTable2 TableType;
+  uint8_t field_a;
+  uint8_t field_b;
+  std::unique_ptr<MyFbs::SimpleStruct> field_struct;
+  TestTable2T()
+      : field_a(0),
+        field_b(0) {
+  }
+};
+
+struct TestTable2 FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  typedef TestTable2T NativeTableType;
+  typedef TestTable2Builder Builder;
+  enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
+    VT_FIELD_A = 4,
+    VT_FIELD_B = 6,
+    VT_FIELD_STRUCT = 8
+  };
+  uint8_t field_a() const {
+    return GetField<uint8_t>(VT_FIELD_A, 0);
+  }
+  uint8_t field_b() const {
+    return GetField<uint8_t>(VT_FIELD_B, 0);
+  }
+  const MyFbs::SimpleStruct *field_struct() const {
+    return GetStruct<const MyFbs::SimpleStruct *>(VT_FIELD_STRUCT);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint8_t>(verifier, VT_FIELD_A) &&
+           VerifyField<uint8_t>(verifier, VT_FIELD_B) &&
+           VerifyField<MyFbs::SimpleStruct>(verifier, VT_FIELD_STRUCT) &&
+           verifier.EndTable();
+  }
+  TestTable2T *UnPack(const flatbuffers::resolver_function_t *_resolver = nullptr) const;
+  void UnPackTo(TestTable2T *_o, const flatbuffers::resolver_function_t *_resolver = nullptr) const;
+  static flatbuffers::Offset<TestTable2> Pack(flatbuffers::FlatBufferBuilder &_fbb, const TestTable2T* _o, const flatbuffers::rehasher_function_t *_rehasher = nullptr);
+};
+
+struct TestTable2Builder {
+  typedef TestTable2 Table;
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_field_a(uint8_t field_a) {
+    fbb_.AddElement<uint8_t>(TestTable2::VT_FIELD_A, field_a, 0);
+  }
+  void add_field_b(uint8_t field_b) {
+    fbb_.AddElement<uint8_t>(TestTable2::VT_FIELD_B, field_b, 0);
+  }
+  void add_field_struct(const MyFbs::SimpleStruct *field_struct) {
+    fbb_.AddStruct(TestTable2::VT_FIELD_STRUCT, field_struct);
+  }
+  explicit TestTable2Builder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  TestTable2Builder &operator=(const TestTable2Builder &);
+  flatbuffers::Offset<TestTable2> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<TestTable2>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<TestTable2> CreateTestTable2(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint8_t field_a = 0,
+    uint8_t field_b = 0,
+    const MyFbs::SimpleStruct *field_struct = 0) {
+  TestTable2Builder builder_(_fbb);
+  builder_.add_field_struct(field_struct);
+  builder_.add_field_b(field_b);
+  builder_.add_field_a(field_a);
+  return builder_.Finish();
+}
+
+flatbuffers::Offset<TestTable2> CreateTestTable2(flatbuffers::FlatBufferBuilder &_fbb, const TestTable2T *_o, const flatbuffers::rehasher_function_t *_rehasher = nullptr);
+
+struct TestTable3T : public flatbuffers::NativeTable {
+  typedef TestTable3 TableType;
+  uint8_t field_a;
+  uint8_t field_b;
+  TestTable3T()
+      : field_a(0),
+        field_b(0) {
+  }
+};
+
+struct TestTable3 FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  typedef TestTable3T NativeTableType;
+  typedef TestTable3Builder Builder;
+  enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
+    VT_FIELD_A = 4,
+    VT_FIELD_B = 6
+  };
+  uint8_t field_a() const {
+    return GetField<uint8_t>(VT_FIELD_A, 0);
+  }
+  uint8_t field_b() const {
+    return GetField<uint8_t>(VT_FIELD_B, 0);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint8_t>(verifier, VT_FIELD_A) &&
+           VerifyField<uint8_t>(verifier, VT_FIELD_B) &&
+           verifier.EndTable();
+  }
+  TestTable3T *UnPack(const flatbuffers::resolver_function_t *_resolver = nullptr) const;
+  void UnPackTo(TestTable3T *_o, const flatbuffers::resolver_function_t *_resolver = nullptr) const;
+  static flatbuffers::Offset<TestTable3> Pack(flatbuffers::FlatBufferBuilder &_fbb, const TestTable3T* _o, const flatbuffers::rehasher_function_t *_rehasher = nullptr);
+};
+
+struct TestTable3Builder {
+  typedef TestTable3 Table;
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_field_a(uint8_t field_a) {
+    fbb_.AddElement<uint8_t>(TestTable3::VT_FIELD_A, field_a, 0);
+  }
+  void add_field_b(uint8_t field_b) {
+    fbb_.AddElement<uint8_t>(TestTable3::VT_FIELD_B, field_b, 0);
+  }
+  explicit TestTable3Builder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  TestTable3Builder &operator=(const TestTable3Builder &);
+  flatbuffers::Offset<TestTable3> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<TestTable3>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<TestTable3> CreateTestTable3(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    uint8_t field_a = 0,
+    uint8_t field_b = 0) {
+  TestTable3Builder builder_(_fbb);
+  builder_.add_field_b(field_b);
+  builder_.add_field_a(field_a);
+  return builder_.Finish();
+}
+
+flatbuffers::Offset<TestTable3> CreateTestTable3(flatbuffers::FlatBufferBuilder &_fbb, const TestTable3T *_o, const flatbuffers::rehasher_function_t *_rehasher = nullptr);
 
 inline TestTableT *TestTable::UnPack(const flatbuffers::resolver_function_t *_resolver) const {
   std::unique_ptr<MyFbs::TestTableT> _o = std::unique_ptr<MyFbs::TestTableT>(new TestTableT());
@@ -115,6 +300,7 @@ inline void TestTable::UnPackTo(TestTableT *_o, const flatbuffers::resolver_func
   (void)_resolver;
   { auto _e = field_a(); _o->field_a = _e; }
   { auto _e = field_b(); _o->field_b = _e; }
+  { auto _e = field_struct(); if (_e) _o->field_struct = std::unique_ptr<MyFbs::SimpleStruct>(new MyFbs::SimpleStruct(*_e)); }
 }
 
 inline flatbuffers::Offset<TestTable> TestTable::Pack(flatbuffers::FlatBufferBuilder &_fbb, const TestTableT* _o, const flatbuffers::rehasher_function_t *_rehasher) {
@@ -127,7 +313,70 @@ inline flatbuffers::Offset<TestTable> CreateTestTable(flatbuffers::FlatBufferBui
   struct _VectorArgs { flatbuffers::FlatBufferBuilder *__fbb; const TestTableT* __o; const flatbuffers::rehasher_function_t *__rehasher; } _va = { &_fbb, _o, _rehasher}; (void)_va;
   auto _field_a = _o->field_a;
   auto _field_b = _o->field_b;
+  auto _field_struct = _o->field_struct ? _o->field_struct.get() : 0;
   return MyFbs::CreateTestTable(
+      _fbb,
+      _field_a,
+      _field_b,
+      _field_struct);
+}
+
+inline TestTable2T *TestTable2::UnPack(const flatbuffers::resolver_function_t *_resolver) const {
+  std::unique_ptr<MyFbs::TestTable2T> _o = std::unique_ptr<MyFbs::TestTable2T>(new TestTable2T());
+  UnPackTo(_o.get(), _resolver);
+  return _o.release();
+}
+
+inline void TestTable2::UnPackTo(TestTable2T *_o, const flatbuffers::resolver_function_t *_resolver) const {
+  (void)_o;
+  (void)_resolver;
+  { auto _e = field_a(); _o->field_a = _e; }
+  { auto _e = field_b(); _o->field_b = _e; }
+  { auto _e = field_struct(); if (_e) _o->field_struct = std::unique_ptr<MyFbs::SimpleStruct>(new MyFbs::SimpleStruct(*_e)); }
+}
+
+inline flatbuffers::Offset<TestTable2> TestTable2::Pack(flatbuffers::FlatBufferBuilder &_fbb, const TestTable2T* _o, const flatbuffers::rehasher_function_t *_rehasher) {
+  return CreateTestTable2(_fbb, _o, _rehasher);
+}
+
+inline flatbuffers::Offset<TestTable2> CreateTestTable2(flatbuffers::FlatBufferBuilder &_fbb, const TestTable2T *_o, const flatbuffers::rehasher_function_t *_rehasher) {
+  (void)_rehasher;
+  (void)_o;
+  struct _VectorArgs { flatbuffers::FlatBufferBuilder *__fbb; const TestTable2T* __o; const flatbuffers::rehasher_function_t *__rehasher; } _va = { &_fbb, _o, _rehasher}; (void)_va;
+  auto _field_a = _o->field_a;
+  auto _field_b = _o->field_b;
+  auto _field_struct = _o->field_struct ? _o->field_struct.get() : 0;
+  return MyFbs::CreateTestTable2(
+      _fbb,
+      _field_a,
+      _field_b,
+      _field_struct);
+}
+
+inline TestTable3T *TestTable3::UnPack(const flatbuffers::resolver_function_t *_resolver) const {
+  std::unique_ptr<MyFbs::TestTable3T> _o = std::unique_ptr<MyFbs::TestTable3T>(new TestTable3T());
+  UnPackTo(_o.get(), _resolver);
+  return _o.release();
+}
+
+inline void TestTable3::UnPackTo(TestTable3T *_o, const flatbuffers::resolver_function_t *_resolver) const {
+  (void)_o;
+  (void)_resolver;
+  { auto _e = field_a(); _o->field_a = _e; }
+  { auto _e = field_b(); _o->field_b = _e; }
+}
+
+inline flatbuffers::Offset<TestTable3> TestTable3::Pack(flatbuffers::FlatBufferBuilder &_fbb, const TestTable3T* _o, const flatbuffers::rehasher_function_t *_rehasher) {
+  return CreateTestTable3(_fbb, _o, _rehasher);
+}
+
+inline flatbuffers::Offset<TestTable3> CreateTestTable3(flatbuffers::FlatBufferBuilder &_fbb, const TestTable3T *_o, const flatbuffers::rehasher_function_t *_rehasher) {
+  (void)_rehasher;
+  (void)_o;
+  struct _VectorArgs { flatbuffers::FlatBufferBuilder *__fbb; const TestTable3T* __o; const flatbuffers::rehasher_function_t *__rehasher; } _va = { &_fbb, _o, _rehasher}; (void)_va;
+  auto _field_a = _o->field_a;
+  auto _field_b = _o->field_b;
+  return MyFbs::CreateTestTable3(
       _fbb,
       _field_a,
       _field_b);

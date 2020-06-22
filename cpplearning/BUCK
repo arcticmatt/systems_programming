@@ -17,6 +17,15 @@ cxx_binary(
 )
 
 cxx_binary(
+  name = 'messing_around',
+  srcs = [
+    'MessingAround.cpp',
+  ],
+  deps = [
+  ],
+)
+
+cxx_binary(
   name = 'move',
   srcs = [
     'Move.cpp',
